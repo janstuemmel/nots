@@ -1,7 +1,7 @@
 <script lang="ts">
   import Chart, { type ChartConfiguration } from 'chart.js/auto';
-  let canvas: HTMLCanvasElement;
 
+  let canvas: HTMLCanvasElement;
   export let data: BarResult
   let chart: Chart<'bar', string[]>;
   let error: string | null = null;
@@ -29,7 +29,7 @@
   }
 </script>
 
-<div>
+<div class="bg-slate-200 dark:bg-slate-900 p-2">
   {#if error}
     <div>error</div>
   {:else}
