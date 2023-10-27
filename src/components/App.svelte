@@ -1,13 +1,10 @@
 <script lang="ts">
   import Monaco from './Monaco.svelte';
-  import { evaluate } from '../common/evaluate/eval';
+  import { evaluate } from '../common/evaluate/eval.js';
   import Result from './Result.svelte';
+  import { usageText } from '../common/const/usage-text.js';
 
-  let value = `import 'https://cdn.jsdelivr.net/npm/lodash'
-
-vm.log(_.map([1,2,3], (v) => v*5))
-`
-
+  let value = usageText;
   let output: ErrResult | SuccessResult | null = null;
 
   $: if(value) {

@@ -26,8 +26,9 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
     vm.dispose()
     return {
       type: 'error',
-      message: err.message
-    };  
+      message: err.message,
+      name: err.name,
+    };
   }
 
   vm.dispose()

@@ -7,7 +7,9 @@ type SuccessResult = {
   type: 'success'
   values: Result[]
 }
+
 type ErrResult = {
   type: 'error'
+  name: string
   message: string
 }
