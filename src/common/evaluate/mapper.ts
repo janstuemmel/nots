@@ -8,7 +8,7 @@ export const mapResult = (value: unknown): Result => {
       }
     default:
       return {
-        type,
+        type: 'unknown',
         value: `${value}`,
       }
   }

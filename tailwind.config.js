@@ -4,4 +4,7 @@ export default {
     './index.html',
     './src/**/*.{html,svelte}',
   ],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

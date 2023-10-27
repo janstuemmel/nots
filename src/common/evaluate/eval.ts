@@ -1,6 +1,6 @@
 import { newQuickJSAsyncWASMModule, shouldInterruptAfterDeadline } from 'quickjs-emscripten'
+import { setChartBarHandle, setLoggerHandle, setMarkdownHandle } from './handles.js'
 import { loadModule } from './module-loader.js'
-import { setLoggerHandle } from './handles.js'
 
 export const evaluate = async (code: string): Promise<SuccessResult | ErrResult> => {
   const QuickJS = await newQuickJSAsyncWASMModule()
@@ -16,6 +16,8 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
   const vmHandle = vm.newObject()
   vm.setProp(vm.global, "vm", vmHandle)  
   setLoggerHandle(vm, vmHandle, returnValues);
+  setMarkdownHandle(vm, vmHandle, returnValues);
+  setChartBarHandle(vm, vmHandle, returnValues);
   vmHandle.dispose()
 
   const res = await vm.evalCodeAsync(code)

@@ -11,8 +11,10 @@ export const usageText = `/**
   *  const arr = _.map([1, 2, 4], v => v ** 2);
   *  const html = Marked.parse('# Hello World');
   * 
-  * Log output via:
+  * Use vm to print output:
   *  vm.log({ arr, html });
+  *  vm.markdown('# markdown string');
+  *  vm.bar(['1', '2'], [['3', '4'], ['5', '6']]);
   * 
   * Hit \`ctrl-Enter\` to execute the code
   */
