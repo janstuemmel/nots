@@ -1,13 +1,15 @@
 <script lang="ts">
-  import Monaco from './Monaco.svelte';
-  import { evaluate } from '../common/evaluate/eval.js';
-  import Result from './Result.svelte';
-  import { usageText } from '../common/const/usage-text.js';
-  import Resizer from './Resizer.svelte';
-  import { clientRect } from '../common/actions/client-rect.js';
   import { writable } from 'svelte/store';
 
-  let theme: 'dark' | 'light' = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  import Result from './Result.svelte';
+  import Monaco from './Monaco.svelte';
+  import Resizer from './Resizer.svelte';
+  import { evaluate } from '../common/evaluate/eval.js';
+  import { usageText } from '../common/const/usage-text.js';
+  import { clientRect } from '../common/actions/client-rect.js';
+  import { matchTheme } from '../common/actions/match-media';
+
+  export let theme = writable<'light' | 'dark'>();
   let value = usageText;
   let output: ErrResult | SuccessResult | null = null;
   
@@ -15,25 +17,14 @@
   let headerHeight = 0;
   let windowHeight = 0;
   let windowWidth = 0;
-  
-  let width = 600
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    theme = event.matches ? 'dark' : 'light';
-  });
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.ctrlKey && evt.key === 's') {
-      evt.preventDefault();
-    }
-  })
+  let width = 600  
 
   $: if(value) {
     evaluate(value).then((res) => output = res)
   }
 </script>
 
-<svelte:window bind:innerHeight={windowHeight} bind:innerWidth={windowWidth} />
+<svelte:window bind:innerHeight={windowHeight} bind:innerWidth={windowWidth} use:matchTheme={theme} />
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
   
@@ -54,7 +45,7 @@
   </div>
 
   <div class="flex overflow-hidden">
-    <Monaco bind:value {theme} height={windowHeight - headerHeight} width={width} />
+    <Monaco bind:value theme={$theme} height={windowHeight - headerHeight} width={width} />
     <Resizer bind:width min={$rect?.left + 100} max={$rect?.right - 100} />
     <div class="flex-1 overflow-y-scroll">
       <Result output={output} />

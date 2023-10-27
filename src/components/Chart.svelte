@@ -19,7 +19,6 @@
         type: 'bar',
         options: { 
           plugins: { legend: { display: false } },
-          onResize: (_, newSize) => console.log('onResize', newSize),
           resizeDelay: 20,
         },
         data: {
@@ -36,7 +35,6 @@
   }
 
   $: if (width && chart) {
-    console.log('chart', width)
     chart.resize()
   }
 

@@ -17,8 +17,6 @@
   let monacoElem: HTMLDivElement;
   let editor: monaco.editor.IStandaloneCodeEditor;
 
-  $: console.log(height)
-
   onMount(async () => {
     self.MonacoEnvironment = {
       getWorker: (_moduleId: string, label: string) => {
@@ -80,11 +78,7 @@
     editor.updateOptions({ theme })
   }
 
-  $: if (height && editor) {
-    editor.layout()
-  }
-
-  $: if (width && editor) {
+  $: if ((width || height) && editor) {
     editor.layout()
   }
 </script>
