@@ -4,7 +4,12 @@ A javascript repl - sandboxed via quickjs.
 
 Takes your javascript code and executes it in the qickjs javascript engine via wasm.
 
-Visit at [github.com/janstuemmel/jsrepl](https://github.com/janstuemmel/jsrepl)
+Visit at [janstuemmel.de/jsrepl](https://janstuemmel.de/jsrepl/)
+
+## Disclaimer
+
+This project was created within an afternoon, thus it's very hacky 
+and does not include tests. Use at your own risk!
 
 ## Build with
 
