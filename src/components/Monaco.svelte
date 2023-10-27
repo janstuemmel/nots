@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import * as monaco from 'monaco-editor'
+  import { editorTypes } from '../common/const/editor-types';
+  
   // @ts-ignore
   import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
   // @ts-ignore
@@ -24,6 +26,8 @@
 
     const Monaco = await import('monaco-editor');
     
+    Monaco.languages.typescript.javascriptDefaults.addExtraLib(editorTypes, 'ts:jsrepl/main.d.ts')
+
     Monaco.editor.defineTheme('dark', {
       base: 'vs-dark',
       inherit: true,
