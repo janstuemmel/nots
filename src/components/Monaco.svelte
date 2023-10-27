@@ -8,11 +8,16 @@
   // @ts-ignore
   import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
+  export let height = 0;
+  export let width = 0;
   export let value = '';
+  export let theme: 'light' | 'dark';
   export let readOnly = false;
 
   let monacoElem: HTMLDivElement;
   let editor: monaco.editor.IStandaloneCodeEditor;
+
+  $: console.log(height)
 
   onMount(async () => {
     self.MonacoEnvironment = {
@@ -44,10 +49,6 @@
       colors: {}
     })
 
-    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-
     editor = Monaco.editor.create(monacoElem, {
       padding: {top: 10},
       value,
@@ -60,6 +61,7 @@
       renderWhitespace: 'none',
       renderLineHighlight: 'none',
       minimap: { enabled: false },
+      scrollBeyondLastLine: false,
       scrollbar: { 
         horizontal: 'hidden',
         vertical: 'hidden',
@@ -72,15 +74,21 @@
     editor.addCommand(monaco.KeyMod.CtrlCmd|monaco.KeyCode.Enter, ()=> {
       value = editor.getValue()
     });
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      const theme = event.matches ? 'dark' : 'light';
-      editor.updateOptions({ theme })
-    });
-
   })
+
+  $: if (editor) {
+    editor.updateOptions({ theme })
+  }
+
+  $: if (height && editor) {
+    editor.layout()
+  }
+
+  $: if (width && editor) {
+    editor.layout()
+  }
 </script>
 
-<div class="flex flex-1 overflow-hidden">
-  <div class="h-screen w-full" bind:this={monacoElem}></div>
+<div class="">
+  <div style:height={`${height}px`} style:width={`${width}px`} bind:this={monacoElem}></div>
 </div>

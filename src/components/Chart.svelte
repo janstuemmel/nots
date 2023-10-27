@@ -6,6 +6,9 @@
   let chart: Chart<'bar', string[]>;
   let error: string | null = null;
   
+  let width = 0;
+  $: height = width / 2
+  
   $: if (canvas) {
     if (chart) {
       chart.data.labels = data.value.labels
@@ -14,7 +17,11 @@
     } else {
       const config: ChartConfiguration<'bar', string[]> = {
         type: 'bar',
-        options: { plugins: { legend: { display: false } } },
+        options: { 
+          plugins: { legend: { display: false } },
+          onResize: (_, newSize) => console.log('onResize', newSize),
+          resizeDelay: 20,
+        },
         data: {
           labels: data.value.labels,
           datasets: data.value.data.map((d, idx) => ({ label: `${idx}`, data: d }))
@@ -27,9 +34,18 @@
       }
     }
   }
+
+  $: if (width && chart) {
+    console.log('chart', width)
+    chart.resize()
+  }
+
 </script>
 
-<div class="bg-slate-200 dark:bg-slate-900 p-2">
+<div 
+  bind:clientWidth={width}
+  style:height={`${height}px`} 
+  class="flex items-center justify-center">
   {#if error}
     <div>error</div>
   {:else}
