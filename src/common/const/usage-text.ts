@@ -1,17 +1,19 @@
 export const usageText = `/**
- * Usage
- * 
- * Import a module via:
- *  import 'https://cdn.jsdelivr.net/npm/lodash';
- * 
- * Use module:
- *  _.map([1, 2, 4], v => v ** 2);
- * 
- * Log output via:
- *  vm.log({ foo: 'bar' });
- * 
- * Hit \`ctrl-Enter\` to execute the code
- */
-
-vm.log({ hello: 'world!' });
+  * Usage
+  * 
+  * Import a module via:
+  *  import 'https://cdn.jsdelivr.net/npm/lodash@4.17.21';
+  * 
+  * Import esm module via:
+  *  import * as Marked from 'https://cdn.jsdelivr.net/npm/marked@9.1.2/+esm';
+  * 
+  * Use modules:
+  *  const arr = _.map([1, 2, 4], v => v ** 2);
+  *  const html = Marked.parse('# Hello World');
+  * 
+  * Log output via:
+  *  vm.log({ arr, html });
+  * 
+  * Hit \`ctrl-Enter\` to execute the code
+  */
 `;
