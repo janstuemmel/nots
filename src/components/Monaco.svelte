@@ -72,11 +72,6 @@
       renderLineHighlight: 'none',
       minimap: { enabled: false },
       scrollBeyondLastLine: false,
-      scrollbar: { 
-        horizontal: 'hidden',
-        vertical: 'hidden',
-      },
-      overviewRulerLanes: 0,
       hideCursorInOverviewRuler: true,
       overviewRulerBorder: false,
     });
