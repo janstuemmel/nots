@@ -36,7 +36,7 @@
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#1e293b',
+        'editor.background': '#0f172a',
       }
     })
     

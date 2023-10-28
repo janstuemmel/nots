@@ -17,7 +17,7 @@
   let headerHeight = 0;
   let windowHeight = 0;
   let windowWidth = 0;
-  let width = 600  
+  $: width = windowWidth / 2
 
   $: if(value) {
     evaluate(value).then((res) => output = res)
@@ -28,7 +28,7 @@
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
   
-  <div bind:clientHeight={headerHeight} class="flex h-14 bg-slate-100 border-b-2 border-b-slate-200 dark:border-b-slate-900 dark:bg-slate-800 px-4 p-2">
+  <div bind:clientHeight={headerHeight} class="flex h-14 bg-slate-100 border-b border-b-slate-200 dark:border-b-slate-900 dark:bg-slate-800 px-4 p-2">
     <div class="flex flex-1 gap-5 items-center">
       <span class="text-xl">🐪</span>
       <span class="tracking-widest text-slate-700 dark:text-slate-300 font-mono">jsrepl</span>
