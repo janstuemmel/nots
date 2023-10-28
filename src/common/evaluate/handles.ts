@@ -10,15 +10,15 @@ export const setLoggerHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, 
   vmFunc.dispose()
 }
 
-export const setMarkdownHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, returnValues: Result[]) => {
-  const vmFunc = vm.newFunction('markdown', (...args) => {
+export const setMdHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, returnValues: Result[]) => {
+  const vmFunc = vm.newFunction('md', (...args) => {
     args.forEach((a) => returnValues.push({
       type: 'html',
       value: marked.parse(`${vm.dump(a)}`),
     }))
   })
 
-  vm.setProp(handle, "markdown", vmFunc)
+  vm.setProp(handle, "md", vmFunc)
   vmFunc.dispose()
 }
 
