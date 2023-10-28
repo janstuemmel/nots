@@ -1,5 +1,6 @@
 <script lang="ts">
   import Chart from "./Chart.svelte";
+  import Object from "./Object.svelte";
 
   export let output: ErrResult | SuccessResult | null = null;
 </script>
@@ -21,6 +22,10 @@
     {:else if result.type === 'bar'}
       <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">
         <Chart data={result} />
+      </div>
+    {:else if result.type === 'object'}
+      <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">
+        <Object data={result} />
       </div>
     {:else}
       <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">

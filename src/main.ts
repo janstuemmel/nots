@@ -1,13 +1,8 @@
 import App from './components/App.svelte';
 import { code } from './common/stores/code.js';
-import { usageText } from './common/const/usage-text';
-import { get } from 'svelte/store';
 
 code.subscribe((v) => {
   var searchParams = new URLSearchParams(window.location.search);
-  console.log(searchParams)
-  console.log(searchParams.get('code'))
-
   if (searchParams.get('code') === null) {
     localStorage.setItem('code', v);
   } else {

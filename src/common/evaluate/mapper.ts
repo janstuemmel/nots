@@ -4,7 +4,7 @@ export const mapResult = (value: unknown): Result => {
     case 'object':
       return {
         type,
-        value: JSON.stringify(value, null, 2),
+        value: value as object,
       }
     default:
       return {

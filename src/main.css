@@ -3,3 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.json-formatter-toggler::after {
+  font-size: 18px;
+  top: -1px;
+  position: relative;
+  content: '▸' !important;
+}

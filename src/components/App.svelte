@@ -8,10 +8,10 @@
   import { clientRect } from '../common/actions/client-rect.js';
   import { matchTheme } from '../common/actions/match-media.js';
   import { code } from '../common/stores/code.js'
+  import { theme } from '../common/stores/theme';
 
   const rect = writable<DOMRect>()
   
-  export let theme = writable<'light' | 'dark'>();
   let output: ErrResult | SuccessResult | null = null;
   
   let headerHeight = 0;

@@ -1,6 +1,11 @@
-type DefaultResult = {
-  type: 'object' | 'unknown'
+type UnknownResult = {
+  type: 'unknown'
   value: string
+}
+
+type ObjectResult = {
+  type: 'object'
+  value: object
 }
 
 type BarResult = {
@@ -16,7 +21,7 @@ type HtmlResult = {
   value: string
 }
 
-type Result = DefaultResult | BarResult | HtmlResult
+type Result = UnknownResult | ObjectResult | BarResult | HtmlResult
 
 type SuccessResult = {
   type: 'success'

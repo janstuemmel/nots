@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "chart.js": "^4.4.0",
+    "json-formatter-js": "^2.3.4",
     "marked": "^9.1.2",
     "monaco-editor": "^0.44.0",
     "quickjs-emscripten": "^0.23.0"
