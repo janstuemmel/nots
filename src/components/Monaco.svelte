@@ -29,6 +29,18 @@
 
     const Monaco = await import('monaco-editor');
     
+    monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+      noSemanticValidation: false,
+      noSyntaxValidation: false
+    });
+
+    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+      target: monaco.languages.typescript.ScriptTarget.ES2020,
+      allowJs: true,
+      checkJs: true,
+      allowNonTsExtensions: true
+    });
+
     Monaco.languages.typescript.javascriptDefaults.addExtraLib(editorTypes, 'ts:jsrepl/main.d.ts')
 
     Monaco.editor.defineTheme('dark', {
