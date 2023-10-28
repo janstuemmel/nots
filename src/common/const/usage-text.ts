@@ -19,5 +19,5 @@ export const usageText = `/**
   * Hit \`ctrl-Enter\` to execute the code
   */
 
-vm.bar({ hello: 'world' });
+vm.log({ hello: 'world' });
 `;
