@@ -5,22 +5,22 @@
   import Monaco from './Monaco.svelte';
   import Resizer from './Resizer.svelte';
   import { evaluate } from '../common/evaluate/eval.js';
-  import { usageText } from '../common/const/usage-text.js';
   import { clientRect } from '../common/actions/client-rect.js';
-  import { matchTheme } from '../common/actions/match-media';
+  import { matchTheme } from '../common/actions/match-media.js';
+  import { code } from '../common/stores/code.js'
 
+  const rect = writable<DOMRect>()
+  
   export let theme = writable<'light' | 'dark'>();
-  let value = usageText;
   let output: ErrResult | SuccessResult | null = null;
   
-  const rect = writable<DOMRect>()
   let headerHeight = 0;
   let windowHeight = 0;
   let windowWidth = 0;
   $: width = windowWidth / 2
 
-  $: if(value) {
-    evaluate(value).then((res) => output = res)
+  $: if(code) {
+    evaluate($code).then((res) => output = res)
   }
 </script>
 
@@ -45,7 +45,7 @@
   </div>
 
   <div class="flex overflow-hidden">
-    <Monaco bind:value theme={$theme} height={windowHeight - headerHeight} width={width} />
+    <Monaco bind:value={$code} theme={$theme} height={windowHeight - headerHeight} width={width} />
     <Resizer bind:width min={$rect?.left + 100} max={$rect?.right - 100} />
     <div class="flex-1 overflow-y-scroll">
       <Result output={output} />

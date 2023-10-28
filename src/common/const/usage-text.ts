@@ -19,5 +19,5 @@ export const usageText = `/**
   * Hit \`ctrl-Enter\` to execute the code
   */
 
-vm.bar(['1', '2'], [['3', '4'], ['5', '6']]);
+vm.bar({ hello: 'world' });
 `;
