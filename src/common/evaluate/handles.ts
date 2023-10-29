@@ -22,6 +22,29 @@ export const setMdHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, retu
   vmFunc.dispose()
 }
 
+export const setTableHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, returnValues: Result[]) => {
+  const vmFunc = vm.newFunction('table', (labelsArg, dataArg) => {
+    if (!labelsArg || !dataArg) {
+      throw new TypeError('missing arguments for table')
+    }
+
+    const labels = vm.dump(labelsArg)
+    const data = vm.dump(dataArg)
+
+    if (!(labels instanceof Array) || !(data instanceof Array)) {
+      throw new TypeError('wrong arguments for table')
+    }
+
+    returnValues.push({
+      type: 'table',
+      value: { labels, data },
+    })
+  })
+
+  vm.setProp(handle, "table", vmFunc)
+  vmFunc.dispose()
+}
+
 export const setChartBarHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, returnValues: Result[]) => {
   const vmFunc = vm.newFunction('bar', (labelsArg, dataArg) => {
     if (!labelsArg || !dataArg) {

@@ -16,12 +16,20 @@ type BarResult = {
   }
 }
 
+type TableResult = {
+  type: 'table'
+  value: {
+    labels: string[]
+    data: string[][]
+  }
+}
+
 type HtmlResult = {
   type: 'html'
   value: string
 }
 
-type Result = UnknownResult | ObjectResult | BarResult | HtmlResult
+type Result = UnknownResult | ObjectResult | BarResult | HtmlResult | TableResult
 
 type SuccessResult = {
   type: 'success'
