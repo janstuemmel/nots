@@ -2,6 +2,7 @@
   export let min = 0;
   export let max: number;
   export let width = 250;
+  export let hide = false;
 
   let wrapperHeight: number;
   const size = 5;
@@ -21,6 +22,7 @@
 
 <div bind:clientHeight={wrapperHeight}>
   <div
+    class:hidden={hide}
     role="slider"
     aria-valuenow={width}
     tabindex="0"

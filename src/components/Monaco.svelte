@@ -8,11 +8,13 @@
   // @ts-ignore
   import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
+  export let hide = false;
   export let height = 0;
   export let width = 0;
   export let value = '';
   export let theme: 'light' | 'dark';
   export let readOnly = false;
+  export let onSubmit: () => void = () => {};
 
   let monacoElem: HTMLDivElement;
   let editor: monaco.editor.IStandaloneCodeEditor;
@@ -62,7 +64,7 @@
     editor = Monaco.editor.create(monacoElem, {
       padding: {top: 10},
       value,
-      readOnly,
+      readOnly: true,
       lineNumbers: 'on',
       language: 'javascript',
       theme,
@@ -76,8 +78,12 @@
       overviewRulerBorder: false,
     });
 
-    editor.addCommand(monaco.KeyMod.CtrlCmd|monaco.KeyCode.Enter, ()=> {
+    editor.onDidChangeModelContent(() => {
       value = editor.getValue()
+    })
+
+    editor.addCommand(monaco.KeyMod.CtrlCmd|monaco.KeyCode.Enter, ()=> {
+      onSubmit()
     });
   })
 
@@ -90,6 +96,6 @@
   }
 </script>
 
-<div class="">
+<div class:hidden={hide}>
   <div style:height={`${height}px`} style:width={`${width}px`} bind:this={monacoElem}></div>
 </div>

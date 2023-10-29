@@ -9,45 +9,97 @@
   import { matchTheme } from '../common/actions/match-media.js';
   import { code } from '../common/stores/code.js'
   import { theme } from '../common/stores/theme';
+  import { setUrlCodeParam, setUrlReadModeParam } from '../common/util/url-params';
 
   const rect = writable<DOMRect>()
   
   let output: ErrResult | SuccessResult | null = null;
   
+  let readMode = false
+
+  const toggleReadMode = () => {
+    readMode = !readMode
+    setUrlReadModeParam(readMode);
+  };
+
   let headerHeight = 0;
   let windowHeight = 0;
   let windowWidth = 0;
   $: width = windowWidth / 2
 
-  $: if(code) {
-    evaluate($code).then((res) => output = res)
-  }
+  $: isMobile = windowWidth < 768
+  $: isMobileEditMode = !readMode && isMobile
+  $: showEditor = (isMobileEditMode || !isMobile) && !readMode
+  $: showResult = !showEditor || !isMobile
+  $: editorWidth = isMobile ? windowWidth : width
+  
+  // evaluate initially
+  evaluate($code).then((res) => output = res)  
+  const submitCode = () => evaluate($code).then((res) => output = res);
 </script>
 
-<svelte:window bind:innerHeight={windowHeight} bind:innerWidth={windowWidth} use:matchTheme={theme} />
+<svelte:window 
+  bind:innerHeight={windowHeight}
+  bind:innerWidth={windowWidth}
+  use:matchTheme={theme} />
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
   
-  <div bind:clientHeight={headerHeight} class="flex h-14 bg-slate-100 border-b border-b-slate-200 dark:border-b-slate-900 dark:bg-slate-800 px-4 p-2">
-    <div class="flex flex-1 gap-5 items-center">
-      <span class="text-xl">🐪</span>
-      <span class="tracking-widest text-slate-700 dark:text-slate-300 font-mono">jsrepl</span>
+  <div bind:clientHeight={headerHeight} class="flex h-14 bg-slate-100 border-b border-b-slate-200 dark:border-b-[#1B2636] dark:bg-slate-800 px-4 p-2">
+    <div class="flex flex-1 gap-5 items-center text-slate-600 dark:text-slate-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-terminal-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M8 9l3 3l-3 3"></path>
+        <path d="M13 15l3 0"></path>
+        <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+      </svg>
     </div>
     <div class="flex gap-5 p-2 pl-6 items-center">
-      <span class="tracking-widest text-slate-400 dark:text-slate-600 font-mono text-xs">run with ctrl-enter</span>
-      <a 
-        href="https://github.com/janstuemmel/jsrepl"
-        target="_blank"
-        class="tracking-widest text-slate-700 dark:text-slate-400 hover:text-slate-900 hover:dark:text-white font-mono text-xs">
-        github
+      <button on:click={submitCode} title="Execute (ctrl-Enter)" class="text-slate-400 dark:text-slate-600 hover:text-slate-700 hover:dark:text-slate-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M7 4v16l13 -8z"></path>
+        </svg>
+      </button>
+      <button on:click={toggleReadMode} title="Switch reader/edit mode" class="text-slate-400 dark:text-slate-600 hover:text-slate-700 hover:dark:text-slate-300">
+        {#if readMode}
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+          <path d="M13.5 6.5l4 4"></path>
+        </svg>
+        {:else}
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-book" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"></path>
+          <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"></path>
+          <path d="M3 6l0 13"></path>
+          <path d="M12 6l0 13"></path>
+          <path d="M21 6l0 13"></path>
+        </svg>
+        {/if}
+      </button>
+      <button on:click={() => setUrlCodeParam($code)} title="Save code in url param" class="text-slate-400 dark:text-slate-600 hover:text-slate-700 hover:dark:text-slate-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+          <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+          <path d="M14 4l0 4l-6 0l0 -4"></path>
+        </svg>
+      </button>
+      <a href="https://github.com/janstuemmel/jsrepl" target="_blank" class="text-slate-400 dark:text-slate-600 hover:text-slate-600 hover:dark:text-slate-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+        </svg>
       </a>
     </div>
   </div>
 
   <div class="flex overflow-hidden">
-    <Monaco bind:value={$code} theme={$theme} height={windowHeight - headerHeight} width={width} />
-    <Resizer bind:width min={$rect?.left + 100} max={$rect?.right - 100} />
-    <div class="flex-1 overflow-y-scroll">
+    <Monaco bind:value={$code} theme={$theme} height={windowHeight - headerHeight} width={editorWidth} onSubmit={submitCode} hide={!showEditor}/>
+    <Resizer bind:width min={$rect?.left + 100} max={$rect?.right - 100} hide={!showEditor} />
+    <div class:hidden={!showResult} class="flex-1 overflow-y-scroll">
       <Result output={output} />
     </div>
   </div>

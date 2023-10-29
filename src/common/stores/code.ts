@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
 import { usageText } from '../const/usage-text.js';
-import { getCodeFromParam } from '../util/code-url-param.js';
+import { getUrlCodeParam } from '../util/url-params.js';
 
-export const code = writable<string>(getCodeFromParam() ?? localStorage.getItem('code') ?? usageText);
+export const code = writable<string>(getUrlCodeParam() ?? localStorage.getItem('code') ?? usageText);
