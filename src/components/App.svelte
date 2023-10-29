@@ -45,8 +45,8 @@
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100">
   
-  <div bind:clientHeight={headerHeight} class="flex h-14 bg-slate-100 border-b border-b-slate-200 dark:border-b-[#1B2636] dark:bg-slate-800 px-4 p-2">
-    <div class="flex flex-1 gap-5 items-center text-slate-600 dark:text-slate-400">
+  <div bind:clientHeight={headerHeight} class="flex justify-between h-14 bg-slate-100 border-b border-b-slate-200 dark:border-b-[#1B2636] dark:bg-slate-800 px-4">
+    <div class="flex gap-5 items-center text-slate-600 dark:text-slate-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-terminal-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M8 9l3 3l-3 3"></path>
@@ -54,7 +54,7 @@
         <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
       </svg>
     </div>
-    <div class="flex gap-5 p-2 pl-6 items-center">
+    <div class="flex gap-5 p-2 pl-6 items-center">      
       <button on:click={submitCode} title="Execute (ctrl-Enter)" class="text-slate-400 dark:text-slate-600 hover:text-slate-700 hover:dark:text-slate-300">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -87,6 +87,8 @@
           <path d="M14 4l0 4l-6 0l0 -4"></path>
         </svg>
       </button>
+    </div>
+    <div class="flex gap-5 p-2 pl-6 items-center">
       <a href="https://github.com/janstuemmel/jsrepl" target="_blank" class="text-slate-400 dark:text-slate-600 hover:text-slate-600 hover:dark:text-slate-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

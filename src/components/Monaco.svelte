@@ -64,7 +64,7 @@
     editor = Monaco.editor.create(monacoElem, {
       padding: {top: 10},
       value,
-      readOnly: true,
+      readOnly,
       lineNumbers: 'on',
       language: 'javascript',
       theme,
