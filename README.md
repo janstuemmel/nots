@@ -6,6 +6,11 @@ Takes your javascript code and executes it in the qickjs javascript engine via w
 
 Visit at [janstuemmel.de/jsrepl](https://janstuemmel.de/jsrepl/)
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./docs/screen-dark.png">
+  <img src="./docs/screen-light.png">
+</picture>
+
 ## Disclaimer
 
 This project was created within an afternoon, thus it's very hacky 
