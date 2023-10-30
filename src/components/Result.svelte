@@ -22,7 +22,11 @@
       </div>
     {:else if result.type === 'bar'}
       <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 p-4">
-        <Chart data={result} />
+        <Chart data={result} type="bar" />
+      </div>
+    {:else if result.type === 'line'}
+      <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 p-4">
+        <Chart data={result} type="line" />
       </div>
     {:else if result.type === 'table'}
       <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 overflow-y-auto">

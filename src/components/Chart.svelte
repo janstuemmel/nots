@@ -1,9 +1,11 @@
 <script lang="ts">
   import Chart, { type ChartConfiguration } from 'chart.js/auto';
 
+  export let data: BarResult | LineResult
+  export let type: 'bar' | 'line';
+
   let canvas: HTMLCanvasElement;
-  export let data: BarResult
-  let chart: Chart<'bar', string[]>;
+  let chart: Chart<'bar' | 'line', string[]>;
   let error: string | null = null;
   
   let width = 0;
@@ -15,8 +17,8 @@
       chart.data.datasets = data.value.data.map((d, idx) => ({ label: `${idx}`, data: d }))
       chart.update()
     } else {
-      const config: ChartConfiguration<'bar', string[]> = {
-        type: 'bar',
+      const config: ChartConfiguration<'bar' | 'line', string[]> = {
+        type,
         options: { 
           plugins: { legend: { display: false } },
           resizeDelay: 20,

@@ -67,3 +67,26 @@ export const setChartBarHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle
   vm.setProp(handle, "bar", vmFunc)
   vmFunc.dispose()
 }
+
+export const setChartLineHandle = (vm: QuickJSAsyncContext, handle: QuickJSHandle, returnValues: Result[]) => {
+  const vmFunc = vm.newFunction('line', (labelsArg, dataArg) => {
+    if (!labelsArg || !dataArg) {
+      throw new TypeError('missing arguments for line chart')
+    }
+
+    const labels = vm.dump(labelsArg)
+    const data = vm.dump(dataArg)
+
+    if (!(labels instanceof Array) || !(data instanceof Array)) {
+      throw new TypeError('wrong arguments for line chart')
+    }
+
+    returnValues.push({
+      type: 'line',
+      value: { labels, data },
+    })
+  })
+
+  vm.setProp(handle, "line", vmFunc)
+  vmFunc.dispose()
+}

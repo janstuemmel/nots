@@ -36,6 +36,12 @@
   // evaluate initially
   evaluate($code).then((res) => output = res)  
   const submitCode = () => evaluate($code).then((res) => output = res);
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.ctrlKey && evt.key === 's') {
+      setUrlCodeParam($code)
+    }
+  })
 </script>
 
 <svelte:window 
@@ -79,7 +85,7 @@
         </svg>
         {/if}
       </button>
-      <button on:click={() => setUrlCodeParam($code)} title="Save code in url param" class="text-slate-400 dark:text-slate-600 hover:text-nord-2 hover:dark:text-slate-300">
+      <button on:click={() => setUrlCodeParam($code)} title="Save code in url param (ctrl-s)" class="text-slate-400 dark:text-slate-600 hover:text-nord-2 hover:dark:text-slate-300">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
           <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>

@@ -14,7 +14,12 @@ declare namespace vm {
   /**
    * displays a bar chart in the output panel
    */ 
-  function bar(labels: string[], data: number[][]): void
+  function bar(labels: (number|string)[], data: number[][]): void
+
+  /**
+   * displays a line chart in the output panel
+   */ 
+  function line(labels: (number|string)[], data: number[][]): void
 
   /**
    * displays a table in the output panel

@@ -16,6 +16,14 @@ type BarResult = {
   }
 }
 
+type LineResult = {
+  type: 'line'
+  value: {
+    labels: string[]
+    data: string[][]
+  }
+}
+
 type TableResult = {
   type: 'table'
   value: {
@@ -29,7 +37,7 @@ type HtmlResult = {
   value: string
 }
 
-type Result = UnknownResult | ObjectResult | BarResult | HtmlResult | TableResult
+type Result = UnknownResult | ObjectResult | BarResult | LineResult | HtmlResult | TableResult
 
 type SuccessResult = {
   type: 'success'
