@@ -14,7 +14,7 @@
 {/if}
 
 {#if output && output.type === 'success'}
-<div class="container m-auto p-4 flex flex-col gap-4 overflow-y-scroll">
+<div class="container m-auto p-4 flex flex-col gap-4">
   {#each output.values as result}
     {#if result.type === 'html'}
       <div class="prose max-w-none dark:prose-invert">
