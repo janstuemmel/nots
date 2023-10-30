@@ -35,6 +35,7 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
   }
 
   vm.dispose()
+  runtime.dispose()
 
   return {
     type: 'success',

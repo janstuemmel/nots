@@ -13,7 +13,7 @@
       columns: data.value.labels,
       data: data.value.data,
       className: {
-        th: 'bg-slate-100 dark:bg-slate-950 p-2 sticky top-0',
+        th: 'bg-nord-4 dark:bg-nord-0 p-2 sticky top-0',
         td: 'p-2 text-center',
         table: 'mb-0 border-black',
       },

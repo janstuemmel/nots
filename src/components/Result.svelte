@@ -21,19 +21,19 @@
         {@html result.value}
       </div>
     {:else if result.type === 'bar'}
-      <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">
+      <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 p-4">
         <Chart data={result} />
       </div>
     {:else if result.type === 'table'}
-      <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 overflow-y-auto">
+      <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 overflow-y-auto">
         <Table data={result} />
       </div>
     {:else if result.type === 'object'}
-      <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">
+      <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 p-4">
         <Object data={result} />
       </div>
     {:else}
-      <div class="bg-white rounded-md border border-slate-200 dark:border-slate-900 dark:bg-slate-900 p-4">
+      <div class="bg-nord-5 rounded-md border border-nord-4 dark:border-nord-2 dark:bg-nord-0 p-4">
         <pre><code class="text-xs">{`${result.value}`}</code></pre>
       </div>
     {/if}

@@ -50,7 +50,7 @@
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#0f172a',
+        'editor.background': '#2e3440',
       }
     })
     
