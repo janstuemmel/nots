@@ -36,6 +36,7 @@
   --ag-header-foreground-color: white;
   --ag-header-background-color: #2e3440;
   --ag-odd-row-background-color: #3b4252;
+  --ag-header-column-resize-handle-color: #3b4252;
   --ag-borders: none;
   --ag-border-radius: 100px;
   --ag-input-focus-box-shadow: none;
