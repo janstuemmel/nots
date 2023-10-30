@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import * as monaco from 'monaco-editor'
   import { editorTypes } from '../common/const/editor-types';
+  import { settings } from '../common/stores/settings';
   
   // @ts-ignore
   import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
@@ -61,15 +62,21 @@
       colors: {}
     })
 
+    Monaco.editor.addKeybindingRule({
+      keybinding: monaco.KeyMod.Shift|monaco.KeyMod.CtrlCmd|monaco.KeyCode.KeyD,
+      command: 'editor.action.copyLinesDownAction',
+      when: 'editorTextFocus && !editorReadonly'
+    })
+
     editor = Monaco.editor.create(monacoElem, {
-      padding: {top: 10},
       value,
-      readOnly,
-      lineNumbers: 'on',
-      language: 'javascript',
       theme,
-      tabSize: 2,
-      fontSize: 14,
+      readOnly,
+      language: 'javascript',
+      padding: { top: 10 },
+      lineNumbers: $settings.lineNumbers,
+      tabSize: $settings.tabSize,
+      fontSize: $settings.fontSize,
       renderWhitespace: 'none',
       renderLineHighlight: 'none',
       minimap: { enabled: false },
@@ -82,13 +89,18 @@
       value = editor.getValue()
     })
 
-    editor.addCommand(monaco.KeyMod.CtrlCmd|monaco.KeyCode.Enter, ()=> {
+    editor.addCommand(monaco.KeyMod.CtrlCmd|monaco.KeyCode.Enter, () => {
       onSubmit()
     });
   })
 
   $: if (editor) {
-    editor.updateOptions({ theme })
+    editor.updateOptions({
+      theme,
+      lineNumbers: $settings.lineNumbers,
+      tabSize: $settings.tabSize,
+      fontSize: $settings.fontSize,
+    })
   }
 
   $: if ((width || height) && editor) {

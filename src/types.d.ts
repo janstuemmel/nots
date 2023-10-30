@@ -42,10 +42,22 @@ type Result = UnknownResult | ObjectResult | BarResult | LineResult | HtmlResult
 type SuccessResult = {
   type: 'success'
   values: Result[]
+  executionTime: number
+  memoryUsed: number
 }
 
 type ErrResult = {
   type: 'error'
   name: string
   message: string
+  executionTime: number
+  memoryUsed: number
+}
+
+type Settings = {
+  memoryLimit: number
+  executionTimeout: number
+  lineNumbers: 'on' | 'off' | 'interval' | 'relative'
+  tabSize: 2 | 4 | 8
+  fontSize: number
 }

@@ -27,7 +27,7 @@
     aria-valuenow={width}
     tabindex="0"
     on:mousedown|preventDefault={handleResize}
-    class="bg-nord-6 dark:bg-nord-1 -translate-x-1/2 absolute h-full z-50 transition cursor-col-resize ease-in-out delay-150 hover:bg-blue-500 dark:hover:bg-blue-500 flex-none"
+    class="bg-nord-6 dark:bg-nord-1 -translate-x-1/2 absolute h-full z-20 transition cursor-col-resize ease-in-out delay-150 hover:bg-blue-500 dark:hover:bg-blue-500 flex-none"
     style:width={`${size}px`}
     style:height={`${wrapperHeight}px`} />
 </div>

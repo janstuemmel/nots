@@ -1,12 +1,17 @@
 import App from './components/App.svelte';
 import { code } from './common/stores/code.js';
 import { getUrlCodeParam } from './common/util/url-params';
+import { settings } from './common/stores/settings';
 
 code.subscribe((v) => {
   if (getUrlCodeParam() === null) {
     localStorage.setItem('code', v);
   }
 });
+
+settings.subscribe((s) => {
+  localStorage.setItem('settings', JSON.stringify(s))
+})
 
 document.addEventListener('keydown', (evt) => {
   if (evt.ctrlKey && evt.key === 's') {

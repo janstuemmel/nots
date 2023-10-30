@@ -2,16 +2,16 @@ import { newQuickJSAsyncWASMModule, shouldInterruptAfterDeadline } from 'quickjs
 import { setChartBarHandle, setChartLineHandle, setLoggerHandle, setMdHandle, setTableHandle } from './handles.js'
 import { loadModule } from './module-loader.js'
 
-export const evaluate = async (code: string): Promise<SuccessResult | ErrResult> => {
+export const evaluate = async (code: string, memory = 1024 * 1024, timeout = 1000): Promise<SuccessResult | ErrResult> => {
   const QuickJS = await newQuickJSAsyncWASMModule()
   const runtime = QuickJS.newRuntime()
 
-  runtime.setMemoryLimit(1024 * 1024)
-  runtime.setInterruptHandler(shouldInterruptAfterDeadline(Date.now() + 1000))
+  runtime.setMemoryLimit(memory)
+  runtime.setInterruptHandler(shouldInterruptAfterDeadline(Date.now() + timeout))
   runtime.setModuleLoader(loadModule)
 
-  const returnValues: SuccessResult['values'] = [];
-    
+  const returnValues: Result[] = [];
+
   const vm = runtime.newContext()
   const vmHandle = vm.newObject()
   vm.setProp(vm.global, "vm", vmHandle)  
@@ -21,8 +21,17 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
   setChartLineHandle(vm, vmHandle, returnValues);
   setTableHandle(vm, vmHandle, returnValues);
   vmHandle.dispose()
-
+  
+  const t0 = performance.now()
+  
   const res = await vm.evalCodeAsync(code)
+  
+  const executionTime = performance.now() - t0;
+  const memoryHandle = runtime.computeMemoryUsage()
+  const memoryUsed = vm.dump(memoryHandle).memory_used_size;
+  memoryHandle.dispose()
+
+  console.log(memoryUsed, executionTime)
 
   if (res.error) {
     const err = vm.dump(res.error);
@@ -32,6 +41,8 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
       type: 'error',
       message: err.message,
       name: err.name,
+      memoryUsed,
+      executionTime,
     };
   }
 
@@ -40,6 +51,8 @@ export const evaluate = async (code: string): Promise<SuccessResult | ErrResult>
 
   return {
     type: 'success',
-    values: returnValues
+    values: returnValues,
+    memoryUsed,
+    executionTime,
   };
 }
