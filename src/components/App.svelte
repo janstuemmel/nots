@@ -9,11 +9,13 @@
   import { matchTheme } from '../common/actions/match-media.js';
   import { code } from '../common/stores/code.js'
   import { theme } from '../common/stores/theme';
-  import { setUrlCodeParam, setUrlReadModeParam } from '../common/util/url-params';
+  import { setUrlReadModeParam } from '../common/util/url-params';
   import Settings from './Settings.svelte';
   import { settings } from '../common/stores/settings';
+  import Share from './Share.svelte';
 
   let showSettingsModal = false;
+  let showShareModal = false;
 
   const rect = writable<DOMRect>()
   
@@ -42,9 +44,13 @@
   const submitCode = () => evaluate($code, $settings.memoryLimit, $settings.executionTimeout)
     .then((res) => output = res);
 
+  const saveToUrl = () => {
+    showShareModal = true
+  }
+
   document.addEventListener('keydown', (evt) => {
     if (evt.ctrlKey && evt.key === 's') {
-      setUrlCodeParam($code)
+      saveToUrl()
     }
   })
 </script>
@@ -55,6 +61,7 @@
   use:matchTheme={theme} />
 
 <Settings bind:show={showSettingsModal} />
+<Share bind:show={showShareModal} code={$code} />
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-nord-6 text-nord-0 dark:bg-nord-1 dark:text-slate-100">
   
@@ -92,12 +99,14 @@
         </svg>
         {/if}
       </button>
-      <button on:click={() => setUrlCodeParam($code)} title="Save code in url param (ctrl-s)" class="text-nord-3 dark:text-nord-4 hover:text-nord-11 transition ease-in-out">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <button on:click={saveToUrl} title="Share code (ctrl-s)" class="text-nord-3 dark:text-nord-4 hover:text-nord-11 transition ease-in-out">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-          <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-          <path d="M14 4l0 4l-6 0l0 -4"></path>
+          <path d="M6 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+          <path d="M18 6m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+          <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+          <path d="M8.7 10.7l6.6 -3.4"></path>
+          <path d="M8.7 13.3l6.6 3.4"></path>
         </svg>
       </button>
       <button on:click={() => showSettingsModal = true} title="Settings" class="text-nord-3 dark:text-nord-4 hover:text-nord-11 transition ease-in-out">

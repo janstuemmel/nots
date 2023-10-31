@@ -1,10 +1,10 @@
 import App from './components/App.svelte';
 import { code } from './common/stores/code.js';
-import { getUrlCodeParam } from './common/util/url-params';
-import { settings } from './common/stores/settings';
+import { settings } from './common/stores/settings.js';
+import { getUrlCodeFragment } from './common/util/url-fragment.js';
 
 code.subscribe((v) => {
-  if (getUrlCodeParam() === null) {
+  if (getUrlCodeFragment() === null) {
     localStorage.setItem('code', v);
   }
 });

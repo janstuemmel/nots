@@ -7,16 +7,6 @@ const getParam = (key: string) => {
   return null
 }
 
-export const getUrlCodeParam = () => {
-  return getParam('code');
-}
-
-export const setUrlCodeParam = (code: string) => {
-  const url = new URL(location.href);
-  url.searchParams.set('code', code)
-  history.pushState(null, '', url.toString())
-}
-
 export const getUrlReadModeParam = () => {
   return getParam('read-mode');
 }
