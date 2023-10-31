@@ -17,7 +17,7 @@
 {#if show}
 <Modal bind:show>
   <div class="text-lg uppercase tracking-widest mb-6">Share</div>
-  <div class="bg-nord-2 p-4 flex gap-4 rounded-md">
+  <div class="bg-nord-4 dark:bg-nord-2 p-4 flex gap-4 rounded-md font-mono">
     <input disabled bind:this={elem} type="text" bind:value class="bg-transparent flex-1 focus:outline-none" />
     <button on:click={copy} class="hover:text-nord-11 transition ease-in-out">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
