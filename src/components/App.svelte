@@ -2,7 +2,7 @@
   import { writable } from 'svelte/store';
 
   import Result from './Result.svelte';
-  import Monaco from './Monaco.svelte';
+  import Monaco from './editor/Monaco.svelte';
   import Resizer from './Resizer.svelte';
   import { evaluate } from '../common/evaluate/eval.js';
   import { clientRect } from '../common/actions/client-rect.js';
