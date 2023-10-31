@@ -27,3 +27,5 @@ const app = new App({
 })
 
 export default app
+
+console.log(Babel.transform('(): Foo => 1', { presets: ['typescript'], filename: "example.ts" }).code)

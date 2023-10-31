@@ -1,3 +1,12 @@
+
+import type { transform } from 'babel-core'
+
+declare global {
+  var Babel: {
+    transform: typeof transform
+  }
+}
+
 type UnknownResult = {
   type: 'unknown'
   value: string
