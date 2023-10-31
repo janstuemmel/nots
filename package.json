@@ -1,10 +1,10 @@
 {
-  "name": "jsrepl",
+  "name": "nots",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "rm -rf jsrepl",
+    "clean": "rm -rf nots",
     "test": "vitest",
     "start": "vite",
     "build": "npm run clean && vite build"

@@ -16,7 +16,7 @@ export const creatMonaco = async (elem: HTMLDivElement, value: string) => {
   });
 
 
-  Monaco.languages.typescript.typescriptDefaults.addExtraLib(editorTypes, 'ts:jsrepl/main1.d.ts')
+  Monaco.languages.typescript.typescriptDefaults.addExtraLib(editorTypes, 'ts:nots/main1.d.ts')
 
   Monaco.editor.defineTheme('dark', {
     base: 'vs-dark',

@@ -7,8 +7,8 @@ export default defineConfig({
     svelte(),
     nodePolyfills()
   ],
-  base: '/jsrepl',
+  base: '/nots',
   build: {
-    outDir: 'jsrepl',
+    outDir: 'nots',
   },
 })

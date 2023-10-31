@@ -2,13 +2,13 @@
 
 A application that takes typescript, executes it in a safe sandbox via quickjs and outputs markdown, tables, line and bar charts. 
 
-Visit at [janstuemmel.de/jsrepl](https://janstuemmel.de/jsrepl/)
+Visit at [janstuemmel.de/nots](https://janstuemmel.de/nots/)
 
 ## Features
 
 * Write code in monaco-editor
 * Executes your code in a quickjs sandbox
-* Configure memory and execution timout 
+* Configure memory and execution timeout 
 * Log primitives and objects via `vm.log`
 * Render markdown via `vm.md`
 * Display bar charts via `vm.bar`
