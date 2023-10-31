@@ -40,8 +40,8 @@
   $: editorWidth = isMobile ? windowWidth : width
   
   // evaluate initially
-  evaluate($code, $settings.memoryLimit, $settings.executionTimeout).then((res) => output = res)  
-  const submitCode = () => evaluate($code, $settings.memoryLimit, $settings.executionTimeout)
+  evaluate($settings.memoryLimit, $settings.executionTimeout).then((res) => output = res)  
+  const submitCode = () => evaluate($settings.memoryLimit, $settings.executionTimeout)
     .then((res) => output = res);
 
   const saveToUrl = () => {

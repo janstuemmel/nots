@@ -1,8 +1,24 @@
 import { newQuickJSAsyncWASMModule, shouldInterruptAfterDeadline } from 'quickjs-emscripten'
 import { setChartBarHandle, setChartLineHandle, setLoggerHandle, setMdHandle, setTableHandle } from './handles.js'
 import { loadModule } from './module-loader.js'
+import * as monaco from 'monaco-editor'
 
-export const evaluate = async (code: string, memory = 1024 * 1024, timeout = 1000): Promise<SuccessResult | ErrResult> => {
+const emitTs = () => monaco.languages.typescript.getTypeScriptWorker()
+  .then(async (worker) => {
+    const editor = monaco.editor.getEditors()[0];
+    const uri = editor?.getModel()?.uri;
+    if (uri) {
+      return worker(uri).then(async (proxy) => {
+        return proxy.getEmitOutput(uri.toString()).then(({ outputFiles }) => {
+          return outputFiles.map((of) => of.text).join('\n')
+        })
+      })
+    } else {
+      throw new Error('could not get uri from editor')
+    }
+  })
+
+export const evaluate = async (memory = 1024 * 1024, timeout = 1000): Promise<SuccessResult | ErrResult> => {
   const QuickJS = await newQuickJSAsyncWASMModule()
   const runtime = QuickJS.newRuntime()
 
@@ -24,14 +40,12 @@ export const evaluate = async (code: string, memory = 1024 * 1024, timeout = 100
   
   const t0 = performance.now()
   
-  const res = await vm.evalCodeAsync(code)
+  const res = await vm.evalCodeAsync(await emitTs())
   
   const executionTime = performance.now() - t0;
   const memoryHandle = runtime.computeMemoryUsage()
   const memoryUsed = vm.dump(memoryHandle).memory_used_size;
   memoryHandle.dispose()
-
-  console.log(memoryUsed, executionTime)
 
   if (res.error) {
     const err = vm.dump(res.error);
@@ -45,10 +59,10 @@ export const evaluate = async (code: string, memory = 1024 * 1024, timeout = 100
       executionTime,
     };
   }
-
+  
   vm.dispose()
   runtime.dispose()
-
+  
   return {
     type: 'success',
     values: returnValues,

@@ -4,20 +4,19 @@ import { editorTypes } from '../../common/const/editor-types';
 export const creatMonaco = async (elem: HTMLDivElement, value: string) => {
   const Monaco = await import('monaco-editor');
 
-  monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+  monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
     noSemanticValidation: false,
     noSyntaxValidation: false
   });
 
-  monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
     lib: ['es2020'],
     target: monaco.languages.typescript.ScriptTarget.ES2020,
-    allowJs: true,
-    checkJs: true,
     allowNonTsExtensions: true
   });
 
-  Monaco.languages.typescript.javascriptDefaults.addExtraLib(editorTypes, 'ts:jsrepl/main.d.ts')
+
+  Monaco.languages.typescript.typescriptDefaults.addExtraLib(editorTypes, 'ts:jsrepl/main1.d.ts')
 
   Monaco.editor.defineTheme('dark', {
     base: 'vs-dark',
@@ -47,9 +46,9 @@ export const creatMonaco = async (elem: HTMLDivElement, value: string) => {
     when: 'editorTextFocus && !editorReadonly'
   })
 
-  return Monaco.editor.create(elem, {
+  const editor = Monaco.editor.create(elem, {
     value,
-    language: 'javascript',
+    language: 'typescript',
     padding: { top: 25, bottom: 10 },
     renderWhitespace: 'none',
     renderLineHighlight: 'none',
@@ -58,4 +57,6 @@ export const creatMonaco = async (elem: HTMLDivElement, value: string) => {
     hideCursorInOverviewRuler: true,
     overviewRulerBorder: false,
   });
+
+  return editor;
 }
