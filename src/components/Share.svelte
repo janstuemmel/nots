@@ -1,11 +1,12 @@
 <script lang="ts">
   import { buildUrlCodeFragment } from '../common/util/url-fragment';
+  import { code } from '../common/stores/code.js'
+
   import Modal from './Modal.svelte';
   let elem: HTMLInputElement;
   export let show = false;
-  export let code: string;
   
-  let value = buildUrlCodeFragment(code)
+  $: value = buildUrlCodeFragment($code)
 
   const copy = () => {
     elem.select();

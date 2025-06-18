@@ -61,7 +61,7 @@
   use:matchTheme={theme} />
 
 <Settings bind:show={showSettingsModal} />
-<Share bind:show={showShareModal} code={$code} />
+<Share bind:show={showShareModal} />
 
 <div use:clientRect={rect} class="flex flex-col h-screen bg-nord-6 text-nord-0 dark:bg-nord-1 dark:text-slate-100">
   
